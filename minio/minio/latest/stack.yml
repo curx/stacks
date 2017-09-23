@@ -17,8 +17,8 @@ services:
         window: 60s
     command: server /export
     environment:
-      - MINIO_ACCESS_KEY: minio
-      - MINIO_SECRET_KEY: minio4play0with0docker
+      - MINIO_ACCESS_KEY=minio
+      - MINIO_SECRET_KEY=minio4play0with0docker
 
 volumes:
   minio:
