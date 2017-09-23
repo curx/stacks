@@ -1,13 +1,29 @@
-version: '2'
+version: '3.1'
 
 services:
- minio:
-  image: minio/minio
-  volumes:
-   - data:/data
-  ports:
-   - "9000:9000"
-  environment:
-   MINIO_ACCESS_KEY: minio
-   MINIO_SECRET_KEY: minio4play0with0docker
-  command: server /data
+  minio:
+    image: minio/minio:latest
+    restart: always
+    volumes:
+      - minio:/export
+    ports:
+      - "9000:9000"
+    networks:
+      - minio
+    deploy:
+      restart_policy:
+        delay: 10s
+        max_attempts: 10
+        window: 60s
+    command: server /export
+    environment:
+      - MINIO_ACCESS_KEY: minio
+      - MINIO_SECRET_KEY: minio4play0with0docker
+
+volumes:
+  minio:
+    external: false
+    
+networks:
+  minio:
+    driver: overlay
